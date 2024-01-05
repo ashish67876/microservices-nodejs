@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: authentication
-          image: ashish233001/authentication-service:1.0
+          image: ashish233001/authentication-service:latest
           ports:
             - containerPort: 3001
 
