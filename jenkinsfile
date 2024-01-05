@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    stages{
+        stage('Checkout from git'){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ashish67876/microservices_project.git']]])
+                
+            }
+        }
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t ashish233001/authentication-service authentication/'
+		    sh 'docker build -t ashish233001/user-service user/'
+	            sh 'docker build -t ashish233001/order-service order/'
+	            sh 'docker build -t ashish233001/product-service product/'
+                }
+            }
+        }
+        stage('Push image to Hub'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                   sh 'docker login -u ashish233001 -p ${dockerhubpwd}'
+
+}
+                   sh 'docker push ashish233001/authentication-service:latest'
+		   sh 'docker push ashish233001/user-service:latest'
+		   sh 'docker push ashish233001/order-service:latest'
+		   sh 'docker push ashish233001/product-service:latest'
+
+
+                }
+            }
+        }
+        stage('Deploy to k8s'){
+            steps{
+                script{
+                    sh 'kubectl apply -f kubernetes/.'
+                }
+            }
+        }
+    }
+}
