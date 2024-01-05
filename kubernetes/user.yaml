@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: user
-          image: yourusername/user-service:1.0
+          image: ashish233001/user-service:latest
           ports:
             - containerPort: 3002
 
