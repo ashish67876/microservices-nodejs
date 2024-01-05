@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: product
-          image: yourusername/product-service:1.0
+          image: ashish233001/product-service:latest
           ports:
             - containerPort: 3003
 
