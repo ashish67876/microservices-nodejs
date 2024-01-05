@@ -1,0 +1,12 @@
+# Template file  
+    spec:
+      containers:
+      - args:
+        - --ingress-class=alb
+        - --cluster-name=cluster-name
+
+# Replaced cluster-name with our cluster-name eksdemo1
+    spec:
+      containers:
+      - args:
+        - --ingress-class=alb
